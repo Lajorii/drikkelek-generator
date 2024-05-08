@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="../style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+
+    <title>Skriv inn</title>
+</head>
+
+<body>
+
+    <header>
+        <p>Jonas' sang-generator</p>
+    </header>
+
+    <div class="container createSong">
+        <textarea name="pastedSong" id="pastedSong" cols="60" rows="28" placeholder="Lim in sangen her"></textarea>
+        <div class="speedSelector">
+            <h2>Hvor mange "actions" vil du ha?</h2>
+            <h3>Dette bestemmer hvor mange verselinjer som går med per action</h3>
+            <div>
+                    <input type="radio" id="mange" name="speed" value="3">
+                    <label for="mange">Mange (3 verselinjer per action)</label><br>
+
+                    <input type="radio" id="middels" name="speed" value="2">
+                    <label for="middels">Middels (2 verselinjer per action )</label><br>
+
+                    <input type="radio" id="få" name="speed" value="1">
+                    <label for="få">Få (1 verselinjer per action )</label>
+
+                    <!-- Kan endres til at bruker skriver inn tall selv! -->
+            </div>
+        </div>
+    </div>
+
+    <p id="generateSongButton" class="button">Generer notat (husk å ha lagt inn hele sangen)</p>
+
+    <div id="noSelectedButtonPopup">
+       <p>OBS! Du har glemt å si hvor mange verselinjer du vil ha per action!</p>
+       <p>Klikk for å fjerne</p>
+    </div>
+
+    <div id="blurryBackground">
+        <div class="loader"></div>
+    </div>
+    
+
+    <script type="module" src="../JAVASCRIPT/createSong.mjs"></script>
+
+</body>
+
+</html>
