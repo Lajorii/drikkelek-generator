@@ -45,13 +45,14 @@ document.getElementById("localCode").innerHTML = "KODE: " + code
 let submitPromptButton = document.getElementById("submitPromptButton")
 
 submitPromptButton.addEventListener("click", async function() {
-    let prompt = document.getElementById("textInput").value
+    let prompt = document.getElementById("textInput")
 
     let docRef = await addDoc(collection(db, "actions"), {
-        action: prompt,
+        action: prompt.value,
         sangid: code
       })
 
+    prompt.value = ""
     successfullySent()
 })
 
