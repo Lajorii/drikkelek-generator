@@ -9,7 +9,7 @@ import {
     setDoc,
     query,
     where,
-    addDoc
+    addDoc 
 } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js"  //  "firebase/firestore/lite" //  "firebase/firestore/lite"let generateSongButton = document.getElementById("generateSongButton")
 
 
