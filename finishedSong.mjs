@@ -33,24 +33,27 @@ const app = initializeApp(firebaseConfig)
 const db = getFirestore(app)
 
 
-const queryString = window.location.search
-console.log(queryString);
+// const queryString = window.location.search
+// console.log(queryString);
 
-const urlParams = new URLSearchParams(queryString)
+// const urlParams = new URLSearchParams(queryString)
 
-const code = urlParams.get("code")
-// const code = "2"
+// const code = urlParams.get("code")
+const code = "51723"
 
 let actionDataCellArr = []
+let isFunctionActive = true
+let intervalId = null
 
 document.getElementById("code").innerHTML = "KODEN ER: " + code
 
 let songTable = document.getElementById("finishedTable")
+let finishedSongArr = []
 
 getDoc(doc(db, "sanger", code)).then(function (docSnap) {
     if (docSnap.exists()) {
 
-        const finishedSongArr = docSnap.data().verselinjer
+        finishedSongArr = docSnap.data().verselinjer
 
         // for (const elm in finishedSongArr) {
         //     if (elm == "" || elm == "\n") {
@@ -79,7 +82,7 @@ getDoc(doc(db, "sanger", code)).then(function (docSnap) {
 
         actionDataCellArr = document.querySelectorAll(".actionDataCell")
         //console.log(actionDataCellArr)
-        setInterval(getActionData, 2000)
+        //setInterval(() => getActionData(finishedSongArr), 2000);
 
     } else {
         // docSnap.data() will be undefined in this case
@@ -87,7 +90,9 @@ getDoc(doc(db, "sanger", code)).then(function (docSnap) {
     }
 })
 
-function getActionData() {
+let actionCounter = document.getElementById("actionCounter")
+
+function getActionData(finishedSongArr) {
 
     let actionsCol = collection(db, "actions")
     let q = query(actionsCol, where("sangid", "==", code))
@@ -102,14 +107,66 @@ function getActionData() {
             // console.log("action.id: " + action.id + " action: ", action.data().action)
             //addToHtml(verselinje)
         })
+
+        if (n >= finishedSongArr.length) {
+            document.getElementById("smallLoader").style.display = "none"
+            actionCounter.innerHTML = n + "/" + finishedSongArr.length
+        } else {
+            actionCounter.innerHTML = n + "/" + finishedSongArr.length
+            document.getElementById("smallLoader").style.display = "block"
+
+        }
     })
+
+    console.log("hei")
 
 }
 
+let finishedButton = document.getElementById("finishedButton")
+
+finishedButton.addEventListener("click", function () {
+    console.log("stopp")
+    isFunctionActive = false // Toggle the state of active
+    if (isFunctionActive) {
+        // If active is set to true again, restart the interval
+        setupInterval()
+    } else {
+        // If active is false, ensure the interval is cleared
+        clearInterval(intervalId)
+    }
+
+    clearPage()
+})
+
+function setupInterval() {
+    intervalId = setInterval(() => {
+        if (isFunctionActive) {
+            getActionData(finishedSongArr)
+        } else {
+            clearInterval(intervalId) // Stop the interval when active is false
+        }
+    }, 2000)
+}
+
+setupInterval()
+
+function clearPage() {
+    document.getElementById("codeContainer").style.display = "none"
+    finishedButton.style.display = "none"
+    document.getElementById("postProductionPopUp").style.display = "flex"
+}
+
+let sendOutButton = document.getElementById("sendOutButton")
+
+sendOutButton.addEventListener("click", function() {
+    let allActionData = document.querySelectorAll("")
+    //defineres også i linje 83?
+    //loop gjennom alle og legg inn i action i firebase til sangen 
+    //de som skriver inn, sjekker om lengden på actions er større enn 0
+})
+
 // TO DO-LISTE
 
-// lag en counter som teller hvor mange linjer som mangler
-// load-ikon
 // send ut til alle-knapp
 // flytte actions opp og ned
 // legge til "alle" på refrenger?
