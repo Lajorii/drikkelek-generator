@@ -9,7 +9,9 @@ import {
     setDoc,
     query,
     where,
-    addDoc
+    addDoc,
+    updateDoc,
+    arrayUnion
 } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js"  //  "firebase/firestore/lite" //  "firebase/firestore/lite"let generateSongButton = document.getElementById("generateSongButton")
 
 
@@ -33,13 +35,13 @@ const app = initializeApp(firebaseConfig)
 const db = getFirestore(app)
 
 
-// const queryString = window.location.search
-// console.log(queryString);
+const queryString = window.location.search
+console.log(queryString);
 
-// const urlParams = new URLSearchParams(queryString)
+const urlParams = new URLSearchParams(queryString)
 
-// const code = urlParams.get("code")
-const code = "51723"
+const code = urlParams.get("code")
+// const code = testkode
 
 let actionDataCellArr = []
 let isFunctionActive = true
@@ -54,13 +56,6 @@ getDoc(doc(db, "sanger", code)).then(function (docSnap) {
     if (docSnap.exists()) {
 
         finishedSongArr = docSnap.data().verselinjer
-
-        // for (const elm in finishedSongArr) {
-        //     if (elm == "" || elm == "\n") {
-        //         let index = finishedSongArr.indexOf(elm)
-        //         finishedSongArr.splice(index, 1)
-        //     }
-        // }
 
         console.log(finishedSongArr)
 
@@ -81,8 +76,6 @@ getDoc(doc(db, "sanger", code)).then(function (docSnap) {
         }
 
         actionDataCellArr = document.querySelectorAll(".actionDataCell")
-        //console.log(actionDataCellArr)
-        //setInterval(() => getActionData(finishedSongArr), 2000);
 
     } else {
         // docSnap.data() will be undefined in this case
@@ -158,15 +151,25 @@ function clearPage() {
 
 let sendOutButton = document.getElementById("sendOutButton")
 
-sendOutButton.addEventListener("click", function() {
-    let allActionData = document.querySelectorAll("")
-    //defineres også i linje 83?
-    //loop gjennom alle og legg inn i action i firebase til sangen 
-    //de som skriver inn, sjekker om lengden på actions er større enn 0
+sendOutButton.addEventListener("click", async function() {
+    console.log(actionDataCellArr)
+
+    const actionCol = doc(db, "sanger", code)
+    
+    for (let elements of actionDataCellArr) {
+        console.log(elements);
+
+        await updateDoc(actionCol, {
+            actions: arrayUnion(elements.innerHTML)
+        })
+    }
+
+    document.getElementById("postProductionPopUp").style.display = "none"
+    
+    // displayer sangen
+    // copy paste
 })
 
 // TO DO-LISTE
-
-// send ut til alle-knapp
 // flytte actions opp og ned
 // legge til "alle" på refrenger?

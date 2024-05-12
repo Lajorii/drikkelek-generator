@@ -90,13 +90,40 @@ section h2 {
     line-height: 40px;
 }
 
-.infoText {
+#infoText {
     width: 70%;
     margin: 10px;
     font-family: var(--oswald);
     text-align: center;
     font-size: 17px;
 }
+
+#successfullySentPopUp {
+    position: absolute;
+    top: 200px;
+    left: 50%;
+    transform: translate(-50%);
+    background-color: greenyellow;
+    width: 60%;
+    font-family: var(--oswald);
+    text-align: center;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px black solid;
+    display: block;
+
+    opacity: 0;
+    transition: opacity 0.5s linear;
+}
+
+.fade-effect {
+    animation: fade 2s linear;
+}
+
+@keyframes fade {
+    0%,100% { opacity: 0 }
+    50% { opacity: 1 }
+  }
 
 .button {
     background-color: var(--azure);

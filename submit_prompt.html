@@ -26,13 +26,21 @@
 
 
 
-    <div class="container collum">
-        <p class="infoText">Skriv her. Trykk "submit" for å sende inn.
+    <div id="submitPrompt" class="container collum">
+        <p id="infoText">Skriv her. Trykk "submit" for å sende inn.
         </p>
         <textarea name="textInput" id="textInput" cols="30" rows="3" placeholder="Er topp 300 i Sawblades"></textarea>
 
         <p id="submitPromptButton" class="button">Submit</p>
     </div>
+
+    <div id="successfullySentPopUp">
+        <p>Sendt inn med suksess</p>
+    </div>
+
+    <table id="finishedTable">
+
+    </table>
 
     <script type="module" src="submit_prompt.mjs"></script>
 
