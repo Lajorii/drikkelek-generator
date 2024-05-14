@@ -155,14 +155,18 @@ sendOutButton.addEventListener("click", async function() {
     console.log(actionDataCellArr)
 
     const actionCol = doc(db, "sanger", code)
+
+    let tempActionArr = []
     
     for (let elements of actionDataCellArr) {
-        console.log(elements);
+        console.log(elements.innerHTML);
 
-        await updateDoc(actionCol, {
-            actions: arrayUnion(elements.innerHTML)
-        })
+        tempActionArr.push(elements.innerHTML)   
     }
+
+    await updateDoc(actionCol, {
+        actions: tempActionArr 
+    })
 
     document.getElementById("postProductionPopUp").style.display = "none"
     

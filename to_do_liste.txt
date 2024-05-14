@@ -1,0 +1,9 @@
+Kan ikke submitte tomme felt
+
+Legge inn en faktisk submit-test
+
+rediger rekkefølge 
+
+fiks arrayUnion 
+
+legg til "finn gammel sang" på index-side. søk opp kode.

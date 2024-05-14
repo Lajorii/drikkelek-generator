@@ -62,7 +62,7 @@ submitPromptButton.addEventListener("click", async function () {
 })
 
 function successfullySent() {
-    // faktisk sjekk om det funka
+    // faktisk sjekk om det funka, kan hende at det ikke gjør det
 
     var element = document.getElementById('successfullySentPopUp')
     element.classList.remove('fade-effect')
@@ -90,12 +90,9 @@ async function chechIfFinished() {
 
                 displaySong(allVerselinjer, allActions)
 
+                document.body.style.overflowY = "auto"
+
                 return true
-
-                // display sangen
-
-                
-
             } else {
 
                 console.log("ikke ferdig")
@@ -125,7 +122,7 @@ setupInterval()
 
 function displaySong(verselinjer, actions) {
     document.getElementById("submitPrompt").style.display = "none"
-    
+
 
     for (let i = 0; i < verselinjer.length; i++) {
         let newRow = document.createElement("tr")
