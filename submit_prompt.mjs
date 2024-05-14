@@ -52,10 +52,16 @@ let submitPromptButton = document.getElementById("submitPromptButton")
 submitPromptButton.addEventListener("click", async function () {
     let prompt = document.getElementById("textInput")
 
-    let docRef = await addDoc(collection(db, "actions"), {
-        action: prompt.value,
-        sangid: code
-    })
+    if (prompt.value === "") {
+        emptyMessasgeDisplay()
+        return
+
+    } else {
+        let docRef = await addDoc(collection(db, "actions"), {
+            action: prompt.value,
+            sangid: code
+        })
+    }
 
     prompt.value = ""
     successfullySent()
@@ -65,6 +71,17 @@ function successfullySent() {
     // faktisk sjekk om det funka, kan hende at det ikke gjør det
 
     var element = document.getElementById('successfullySentPopUp')
+    element.classList.remove('fade-effect')
+    void element.offsetWidth
+    element.classList.add('fade-effect')
+
+    setTimeout(() => {
+        element.classList.remove('fade-effect')
+    }, 2000)
+}
+
+function emptyMessasgeDisplay() {
+    var element = document.getElementById('emptyMessasgePopUp')
     element.classList.remove('fade-effect')
     void element.offsetWidth
     element.classList.add('fade-effect')
