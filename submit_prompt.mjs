@@ -45,7 +45,42 @@ const urlParams = new URLSearchParams(queryString)
 
 const code = urlParams.get("code")
 
-document.getElementById("localCode").innerHTML = "KODE: " + code
+document.getElementById("code").innerHTML = "KODE: " + code
+let actionCounter = document.getElementById("actionCounter")
+
+function getActionData() {
+    let actionsCol = collection(db, "actions");
+    let q = query(actionsCol, where("sangid", "==", code));
+
+    getDocs(q).then(function (actionSnapshot) {
+        let n = actionSnapshot.size; // Get the number of documents directly
+
+        // Update the action counter
+        actionCounter.innerHTML = n + "/" + finishedSongArr.length
+
+        // Show or hide the loader based on the number of actions
+    });
+
+    console.log("hei");
+}
+
+setInterval(getActionData, 1000)
+
+let finishedSongArr = []
+
+getDoc(doc(db, "sanger", code)).then(function (docSnap) {
+    if (docSnap.exists()) {
+
+        finishedSongArr = docSnap.data().verselinjer
+
+        console.log(finishedSongArr)
+
+    } else {
+        // docSnap.data() will be undefined in this case
+        console.log("No such document!")
+    }
+})
+
 
 let submitPromptButton = document.getElementById("submitPromptButton")
 
