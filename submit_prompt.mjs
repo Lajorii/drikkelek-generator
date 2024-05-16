@@ -48,24 +48,6 @@ const code = urlParams.get("code")
 document.getElementById("code").innerHTML = "KODE: " + code
 let actionCounter = document.getElementById("actionCounter")
 
-function getActionData() {
-    let actionsCol = collection(db, "actions");
-    let q = query(actionsCol, where("sangid", "==", code));
-
-    getDocs(q).then(function (actionSnapshot) {
-        let n = actionSnapshot.size; // Get the number of documents directly
-
-        // Update the action counter
-        actionCounter.innerHTML = n + "/" + finishedSongArr.length
-
-        // Show or hide the loader based on the number of actions
-    });
-
-    console.log("hei");
-}
-
-setInterval(getActionData, 1000)
-
 let finishedSongArr = []
 
 getDoc(doc(db, "sanger", code)).then(function (docSnap) {
@@ -156,6 +138,20 @@ async function chechIfFinished() {
             return false
         }
     })
+
+    let actionsCol = collection(db, "actions");
+    let q = query(actionsCol, where("sangid", "==", code));
+
+    getDocs(q).then(function (actionSnapshot) {
+        let n = actionSnapshot.size; // Get the number of documents directly
+
+        // Update the action counter
+        actionCounter.innerHTML = n + "/" + finishedSongArr.length
+
+        // Show or hide the loader based on the number of actions
+
+        console.log("hei");
+    });
 }
 
 
@@ -174,6 +170,7 @@ setupInterval()
 
 function displaySong(verselinjer, actions) {
     document.getElementById("submitPrompt").style.display = "none"
+    document.getElementById("submitLoaderContainer").style.display = "none"
 
 
     for (let i = 0; i < verselinjer.length; i++) {

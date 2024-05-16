@@ -1,14 +1,6 @@
-Kan ikke submitte tomme felt
-
 Legge inn en faktisk submit-test
 
 rediger rekkefølge, slette 
-
-legg til "finn gammel sang" på index-side. søk opp kode.
-
-legge til kode på den som sender ut sånn at de kan se koden
-
-legge til antall
 
 copy paste knapp
 

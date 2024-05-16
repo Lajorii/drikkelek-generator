@@ -90,7 +90,7 @@ section h2 {
     line-height: 40px;
 }
 
-#infoText {
+.infoText {
     width: 70%;
     margin: 10px;
     font-family: var(--oswald);
