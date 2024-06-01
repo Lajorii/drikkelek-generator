@@ -180,119 +180,122 @@ let editButton = document.getElementById("editButton")
 let postProductionPopUp = document.getElementById("postProductionPopUp")
 
 let actionDataCellArr
-let isEditing = -1
+let isEditing = false
 
 editButton.addEventListener("click", function () {
     //postProductionPopUp.style.display = "none"
 
-    if (isEditing < 0) {
-        isEditing *= -1
+    if (!isEditing) {
+        isEditing = true
         editButton.style.backgroundColor = 'greenyellow'
         sendOutButton.style.display = 'none'
         editButton.innerHTML = 'Ferdig?'
+
+        actionDataCellArr = Array.from(actionDataCellNl)
+        makeDraggable()
     } else {
         editButton.style.backgroundColor = 'var(--azure)'
         sendOutButton.style.display = 'block'
         editButton.innerHTML = 'Rediger rekkefølge   <i class="fa-solid fa-sort"></i>'
+        isEditing = false
     }
-
-
-
-
-    actionDataCellArr = Array.from(actionDataCellNl)
-
-    makeDraggable()
 })
 
 let startRow
 
 function makeDraggable() {
-    for (let action_td of actionDataCellArr) {
-        action_td.setAttribute('draggable', true)
+    if (isEditing) {
+        for (let action_td of actionDataCellArr) {
+            action_td.setAttribute('draggable', true)
 
-        action_td.addEventListener('dragstart', (e) => {
-            startRow = e.target
-        })
-
-
-        action_td.addEventListener('dragover', (e) => {
-            e.preventDefault()
-
-            for (let action_td of actionDataCellArr) {
-                action_td.style.border = '1px black solid'
-            }
-
-            if (actionDataCellArr.indexOf(startRow) > actionDataCellArr.indexOf(e.target)) {
-                e.target.style.borderTop = "3px black solid"
-            } else {
-                e.target.style.borderBottom = "3px black solid"
-            }
-
-            scrollPageLaptop(e.screenY)
-
-            // actionDataCellArr[actionDataCellArr.indexOf(e.target) + 1].style.border = '1px black solid'
-            // actionDataCellArr[actionDataCellArr.indexOf(e.target) - 1].style.border = '1px black solid'
-        })
+            action_td.addEventListener('dragstart', (e) => {
+                startRow = e.target
+            })
 
 
-        action_td.addEventListener('drop', (e) => {
-            e.preventDefault()
+            action_td.addEventListener('dragover', (e) => {
+                e.preventDefault()
 
-            actionDataCellArr[actionDataCellArr.indexOf(e.target)].style.border = "1px black solid"
+                for (let action_td of actionDataCellArr) {
+                    action_td.style.border = '1px black solid'
+                }
 
-            rewriteTable(actionDataCellArr.indexOf(startRow), actionDataCellArr.indexOf(e.target))
-        })
+                if (actionDataCellArr.indexOf(startRow) > actionDataCellArr.indexOf(e.target)) {
+                    e.target.style.borderTop = "3px black solid"
+                } else {
+                    e.target.style.borderBottom = "3px black solid"
+                }
+
+                scrollPageLaptop(e.screenY)
+
+                // actionDataCellArr[actionDataCellArr.indexOf(e.target) + 1].style.border = '1px black solid'
+                // actionDataCellArr[actionDataCellArr.indexOf(e.target) - 1].style.border = '1px black solid'
+            })
 
 
-        //for mobil
+            action_td.addEventListener('drop', (e) => {
+                e.preventDefault()
 
-        action_td.addEventListener('touchstart', (e) => {
-            startRow = e.target
-            console.log('start')
-        })
+                actionDataCellArr[actionDataCellArr.indexOf(e.target)].style.border = "1px black solid"
 
-        action_td.addEventListener('touchmove', (e) => {
-            e.preventDefault()
-            console.log('move')
+                rewriteTable(actionDataCellArr.indexOf(startRow), actionDataCellArr.indexOf(e.target))
+            })
 
-            // Get the touch point under the touchmove event
-            let touch = e.touches[0] || e.changedTouches[0]
-            let targetElement = document.elementFromPoint(touch.clientX, touch.clientY)
 
-            for (let action_td of actionDataCellArr) {
-                action_td.style.border = '1px black solid'
-            }
+            //for mobil
 
-            if (actionDataCellArr.indexOf(startRow) > actionDataCellArr.indexOf(targetElement) && actionDataCellArr.includes(targetElement)) {
-                targetElement.style.borderTop = "3px black solid"
+            action_td.addEventListener('touchstart', (e) => {
+                startRow = e.target
+                console.log('start')
+            })
 
-            } else if (actionDataCellArr.includes(targetElement)) {
-                targetElement.style.borderBottom = "3px black solid"
-            }
+            action_td.addEventListener('touchmove', (e) => {
+                e.preventDefault()
+                console.log('move')
 
-            scrollPageMobile(touch.clientY)
+                // Get the touch point under the touchmove event
+                let touch = e.touches[0] || e.changedTouches[0]
+                let targetElement = document.elementFromPoint(touch.clientX, touch.clientY)
 
-            fakeMove(startRow, touch.clientX, touch.clientY)
-        })
+                for (let action_td of actionDataCellArr) {
+                    action_td.style.border = '1px black solid'
+                }
 
-        action_td.addEventListener('touchend', (e) => {
-            e.preventDefault()
+                if (actionDataCellArr.indexOf(startRow) > actionDataCellArr.indexOf(targetElement) && actionDataCellArr.includes(targetElement)) {
+                    targetElement.style.borderTop = "3px black solid"
 
-            document.getElementById('fakeElm').remove()
-            let fakeElm = document.createElement('div')
-            fakeElm.setAttribute("id", "fakeElm")
-            document.body.appendChild(fakeElm)
+                } else if (actionDataCellArr.includes(targetElement)) {
+                    targetElement.style.borderBottom = "3px black solid"
+                }
 
-            console.log('end')
+                scrollPageMobile(touch.clientY)
 
-            // Get the touch point under the touchend event
-            let touch = e.changedTouches[0]
-            let targetElement = document.elementFromPoint(touch.clientX, touch.clientY)
+                fakeMove(startRow, touch.clientX, touch.clientY)
+            })
 
-            actionDataCellArr[actionDataCellArr.indexOf(targetElement)].style.border = "1px black solid"
+            action_td.addEventListener('touchend', (e) => {
+                e.preventDefault()
 
-            rewriteTable(actionDataCellArr.indexOf(startRow), actionDataCellArr.indexOf(targetElement))
-        })
+                document.getElementById('fakeElm').remove()
+                let fakeElm = document.createElement('div')
+                fakeElm.setAttribute("id", "fakeElm")
+                document.body.appendChild(fakeElm)
+
+                console.log('end')
+
+                // Get the touch point under the touchend event
+                let touch = e.changedTouches[0]
+                let targetElement = document.elementFromPoint(touch.clientX, touch.clientY)
+
+                actionDataCellArr[actionDataCellArr.indexOf(targetElement)].style.border = "1px black solid"
+
+                rewriteTable(actionDataCellArr.indexOf(startRow), actionDataCellArr.indexOf(targetElement))
+            })
+        }
+    } else {
+        for (let action_td of actionDataCellArr) {
+            // remove all event listeners 
+        }
     }
 }
 
@@ -317,13 +320,13 @@ function scrollPageLaptop(y) {
 function scrollPageMobile(y) {
     let touchOfScreenFactor = y / window.screen.height
 
-    if (touchOfScreenFactor > 0.91) {
+    if (touchOfScreenFactor > 0.81) {
         window.scrollBy({
             top: 20,
             behavior: "auto",
         })
 
-    } else if (touchOfScreenFactor > 0.8) {
+    } else if (touchOfScreenFactor > 0.6) {
         window.scrollBy({
             top: 7,
             behavior: "auto",
