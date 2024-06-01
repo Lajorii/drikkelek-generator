@@ -7,6 +7,10 @@
 
     <link rel="stylesheet" href="style.css">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
@@ -24,23 +28,22 @@
         <p id="code">Kode...</p>
         <div class="flex">
             <div id="smallLoader"></div>
-        <div>
-            <p id="actionCounter">...</p>
+            <div>
+                <p id="actionCounter">...</p>
+            </div>
         </div>
-        </div>
-        
     </div>
 
 
     <p id="finishedButton">Ferdig? Trykk for å redigere</p>
 
     <div id="postProductionPopUp">
-        <p><i>Redigering ikke tilgjenglig for øyeblikket</i></p>
+        <p id="editButton">Rediger rekkefølge   <i class="fa-solid fa-sort"></i></p>
         <p id="sendOutButton">SEND UT TIL ALLE</p>
     </div>
 
     <table id="finishedTable">
-        
+
     </table>
 
     <p id="a"></p>
@@ -48,8 +51,9 @@
     <!-- <div id="blurryBackground">
         <div class="loader"></div>
     </div> -->
-    
-   
+
+    <div id="fakeElm"></div>
+
     <script type="module" src="finishedSong.mjs"></script>
 
 </body>

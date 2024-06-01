@@ -43,7 +43,7 @@ const urlParams = new URLSearchParams(queryString)
 const code = urlParams.get("code")
 // const code = testkode
 
-let actionDataCellArr = []
+let actionDataCellNl = []
 let isFunctionActive = true
 let intervalId = null
 
@@ -75,7 +75,7 @@ getDoc(doc(db, "sanger", code)).then(function (docSnap) {
 
         }
 
-        actionDataCellArr = document.querySelectorAll(".actionDataCell")
+        actionDataCellNl = document.querySelectorAll(".actionDataCell")
 
     } else {
         // docSnap.data() will be undefined in this case
@@ -95,7 +95,7 @@ function getActionData(finishedSongArr) {
         let n = 0
         actionSnapshot.docs.forEach((action) => {
 
-            actionDataCellArr[n].innerHTML = action.data().action
+            actionDataCellNl[n].innerHTML = action.data().action
             n += 1
             // console.log("action.id: " + action.id + " action: ", action.data().action)
             //addToHtml(verselinje)
@@ -151,29 +151,235 @@ function clearPage() {
 
 let sendOutButton = document.getElementById("sendOutButton")
 
-sendOutButton.addEventListener("click", async function() {
-    console.log(actionDataCellArr)
+sendOutButton.addEventListener("click", async function () {
+    console.log(actionDataCellNl)
 
     const actionCol = doc(db, "sanger", code)
 
     let tempActionArr = []
-    
-    for (let elements of actionDataCellArr) {
+
+    for (let elements of actionDataCellNl) {
         console.log(elements.innerHTML);
 
-        tempActionArr.push(elements.innerHTML)   
+        tempActionArr.push(elements.innerHTML)
     }
 
     await updateDoc(actionCol, {
-        actions: tempActionArr 
+        actions: tempActionArr
     })
 
-    document.getElementById("postProductionPopUp").style.display = "none"
-    
+    postProductionPopUp.style.display = "none"
+
     // displayer sangen
     // copy paste
 })
 
+//Rediger rekkefølge
+
+let editButton = document.getElementById("editButton")
+let postProductionPopUp = document.getElementById("postProductionPopUp")
+
+let actionDataCellArr
+let isEditing = -1
+
+editButton.addEventListener("click", function () {
+    //postProductionPopUp.style.display = "none"
+
+    if (isEditing < 0) {
+        isEditing *= -1
+        editButton.style.backgroundColor = 'greenyellow'
+        sendOutButton.style.display = 'none'
+        editButton.innerHTML = 'Ferdig?'
+    } else {
+        editButton.style.backgroundColor = 'var(--azure)'
+        sendOutButton.style.display = 'block'
+        editButton.innerHTML = 'Rediger rekkefølge   <i class="fa-solid fa-sort"></i>'
+    }
+
+
+
+
+    actionDataCellArr = Array.from(actionDataCellNl)
+
+    makeDraggable()
+})
+
+let startRow
+
+function makeDraggable() {
+    for (let action_td of actionDataCellArr) {
+        action_td.setAttribute('draggable', true)
+
+        action_td.addEventListener('dragstart', (e) => {
+            startRow = e.target
+        })
+
+
+        action_td.addEventListener('dragover', (e) => {
+            e.preventDefault()
+
+            for (let action_td of actionDataCellArr) {
+                action_td.style.border = '1px black solid'
+            }
+
+            if (actionDataCellArr.indexOf(startRow) > actionDataCellArr.indexOf(e.target)) {
+                e.target.style.borderTop = "3px black solid"
+            } else {
+                e.target.style.borderBottom = "3px black solid"
+            }
+
+            scrollPageLaptop(e.screenY)
+
+            // actionDataCellArr[actionDataCellArr.indexOf(e.target) + 1].style.border = '1px black solid'
+            // actionDataCellArr[actionDataCellArr.indexOf(e.target) - 1].style.border = '1px black solid'
+        })
+
+
+        action_td.addEventListener('drop', (e) => {
+            e.preventDefault()
+
+            actionDataCellArr[actionDataCellArr.indexOf(e.target)].style.border = "1px black solid"
+
+            rewriteTable(actionDataCellArr.indexOf(startRow), actionDataCellArr.indexOf(e.target))
+        })
+
+
+        //for mobil
+
+        action_td.addEventListener('touchstart', (e) => {
+            startRow = e.target
+            console.log('start')
+        })
+
+        action_td.addEventListener('touchmove', (e) => {
+            e.preventDefault()
+            console.log('move')
+
+            // Get the touch point under the touchmove event
+            let touch = e.touches[0] || e.changedTouches[0]
+            let targetElement = document.elementFromPoint(touch.clientX, touch.clientY)
+
+            for (let action_td of actionDataCellArr) {
+                action_td.style.border = '1px black solid'
+            }
+
+            if (actionDataCellArr.indexOf(startRow) > actionDataCellArr.indexOf(targetElement) && actionDataCellArr.includes(targetElement)) {
+                targetElement.style.borderTop = "3px black solid"
+
+            } else if (actionDataCellArr.includes(targetElement)) {
+                targetElement.style.borderBottom = "3px black solid"
+            }
+
+            scrollPageMobile(touch.clientY)
+
+            fakeMove(startRow, touch.clientX, touch.clientY)
+        })
+
+        action_td.addEventListener('touchend', (e) => {
+            e.preventDefault()
+
+            document.getElementById('fakeElm').remove()
+            let fakeElm = document.createElement('div')
+            fakeElm.setAttribute("id", "fakeElm")
+            document.body.appendChild(fakeElm)
+
+            console.log('end')
+
+            // Get the touch point under the touchend event
+            let touch = e.changedTouches[0]
+            let targetElement = document.elementFromPoint(touch.clientX, touch.clientY)
+
+            actionDataCellArr[actionDataCellArr.indexOf(targetElement)].style.border = "1px black solid"
+
+            rewriteTable(actionDataCellArr.indexOf(startRow), actionDataCellArr.indexOf(targetElement))
+        })
+    }
+}
+
+function scrollPageLaptop(y) {
+    let touchOfScreenFactor = y / window.screen.height
+
+    if (touchOfScreenFactor > 0.8) {
+        window.scrollBy({
+            top: 2,
+            behavior: "auto",
+        })
+
+    } else if (touchOfScreenFactor < 0.2) {
+        //scroll up
+        window.scrollBy({
+            top: -2,
+            behavior: "auto",
+        })
+    }
+}
+
+function scrollPageMobile(y) {
+    let touchOfScreenFactor = y / window.screen.height
+
+    if (touchOfScreenFactor > 0.91) {
+        window.scrollBy({
+            top: 20,
+            behavior: "auto",
+        })
+
+    } else if (touchOfScreenFactor > 0.8) {
+        window.scrollBy({
+            top: 7,
+            behavior: "auto",
+        })
+
+    } else if (touchOfScreenFactor < 0.1) {
+        window.scrollBy({
+            top: -20,
+            behavior: "auto",
+        })
+
+    } else if (touchOfScreenFactor < 0.2) {
+        //scroll up
+        window.scrollBy({
+            top: -7,
+            behavior: "auto",
+        })
+    }
+}
+
+function fakeMove(elm, x, y) {
+    document.getElementById('fakeElm').remove()
+
+    let fakeElm = elm.cloneNode(true)
+    // let style = window.getComputedStyle(elm)
+    // let width = style.getPropertyValue('width')
+
+    fakeElm.classList.add('fakeMove', 'td')
+    fakeElm.setAttribute("id", "fakeElm")
+
+    fakeElm.style.left = x + 2 + 'px'
+    fakeElm.style.top = y - 15 + 'px'
+    fakeElm.style.width = window.getComputedStyle(elm).getPropertyValue('width')
+    fakeElm.style.height = window.getComputedStyle(elm).getPropertyValue('height')
+
+    //console.log(window.getComputedStyle(elm).getPropertyValue('height'));
+
+    document.body.appendChild(fakeElm)
+}
+
+let rowsText = []
+
+function rewriteTable(startIndex, endIndex) {
+    for (let action_td of actionDataCellArr) {
+        rowsText.push(action_td.innerHTML)
+    }
+
+    let movingElm = rowsText[startIndex]
+
+    rowsText.splice(startIndex, 1)
+    rowsText.splice(endIndex, 0, movingElm)
+
+    for (let i = 0; i < actionDataCellArr.length; i++) {
+        actionDataCellArr[i].innerHTML = rowsText[i]
+    }
+}
 // TO DO-LISTE
 // flytte actions opp og ned
 // legge til "alle" på refrenger?

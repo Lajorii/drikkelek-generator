@@ -363,6 +363,20 @@ td {
     background-color: white;
 }
 
+.fakeMove {
+    position: fixed;
+    opacity: 0.8;
+    height: auto;
+
+    border: 1px black solid;
+    font-family: var(--oswald);
+    padding: 4px 10px;
+    min-width: 100px;
+    background-color: white;
+    display: flex;
+    align-items: center;
+}
+
 @media (max-width: 600px) {
     .container {
         flex-direction: column;
