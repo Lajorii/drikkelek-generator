@@ -187,7 +187,7 @@ editButton.addEventListener("click", function () {
 
     if (!isEditing) {
         isEditing = true
-        editButton.style.backgroundColor = 'greenyellow'
+        editButton.style.backgroundColor = 'rgb(237,238,234)'
         sendOutButton.style.display = 'none'
         editButton.innerHTML = 'Ferdig?'
 
