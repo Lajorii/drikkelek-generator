@@ -198,103 +198,123 @@ editButton.addEventListener("click", function () {
         sendOutButton.style.display = 'block'
         editButton.innerHTML = 'Rediger rekkefølge   <i class="fa-solid fa-sort"></i>'
         isEditing = false
+        makeDraggable()
     }
 })
 
 let startRow
 
+function dragstartHandle(e) {
+    startRow = e.target
+}
+
+function dragoverHandle(e) {
+    e.preventDefault()
+
+    for (let action_td of actionDataCellArr) {
+        action_td.style.border = '1px black solid'
+    }
+
+    if (actionDataCellArr.indexOf(startRow) > actionDataCellArr.indexOf(e.target)) {
+        e.target.style.borderTop = "3px black solid"
+    } else {
+        e.target.style.borderBottom = "3px black solid"
+    }
+
+    scrollPageLaptop(e.screenY)
+
+    // actionDataCellArr[actionDataCellArr.indexOf(e.target) + 1].style.border = '1px black solid'
+    // actionDataCellArr[actionDataCellArr.indexOf(e.target) - 1].style.border = '1px black solid'
+}
+
+function dropHandle(e) {
+    e.preventDefault()
+
+    actionDataCellArr[actionDataCellArr.indexOf(e.target)].style.border = "1px black solid"
+
+    rewriteTable(actionDataCellArr.indexOf(startRow), actionDataCellArr.indexOf(e.target))
+}
+
+function touchstartHandle(e) {
+    startRow = e.target
+    console.log('start')
+}
+
+function touchmoveHandle(e) {
+    e.preventDefault()
+    console.log('move')
+
+    // Get the touch point under the touchmove event
+    let touch = e.touches[0] || e.changedTouches[0]
+    let targetElement = document.elementFromPoint(touch.clientX, touch.clientY)
+
+    for (let action_td of actionDataCellArr) {
+        action_td.style.border = '1px black solid'
+    }
+
+    if (actionDataCellArr.indexOf(startRow) > actionDataCellArr.indexOf(targetElement) && actionDataCellArr.includes(targetElement)) {
+        targetElement.style.borderTop = "3px black solid"
+
+    } else if (actionDataCellArr.includes(targetElement)) {
+        targetElement.style.borderBottom = "3px black solid"
+    }
+
+    scrollPageMobile(touch.clientY)
+
+    fakeMove(startRow, touch.clientX, touch.clientY)
+}
+
+function touchendHandle(e) {
+    e.preventDefault()
+
+    document.getElementById('fakeElm').remove()
+    let fakeElm = document.createElement('div')
+    fakeElm.setAttribute("id", "fakeElm")
+    document.body.appendChild(fakeElm)
+
+    console.log('end')
+
+    // Get the touch point under the touchend event
+    let touch = e.changedTouches[0]
+    let targetElement = document.elementFromPoint(touch.clientX, touch.clientY)
+
+    actionDataCellArr[actionDataCellArr.indexOf(targetElement)].style.border = "1px black solid"
+
+    rewriteTable(actionDataCellArr.indexOf(startRow), actionDataCellArr.indexOf(targetElement))
+}
+
 function makeDraggable() {
     if (isEditing) {
         for (let action_td of actionDataCellArr) {
             action_td.setAttribute('draggable', true)
+            
 
-            action_td.addEventListener('dragstart', (e) => {
-                startRow = e.target
-            })
-
-
-            action_td.addEventListener('dragover', (e) => {
-                e.preventDefault()
-
-                for (let action_td of actionDataCellArr) {
-                    action_td.style.border = '1px black solid'
-                }
-
-                if (actionDataCellArr.indexOf(startRow) > actionDataCellArr.indexOf(e.target)) {
-                    e.target.style.borderTop = "3px black solid"
-                } else {
-                    e.target.style.borderBottom = "3px black solid"
-                }
-
-                scrollPageLaptop(e.screenY)
-
-                // actionDataCellArr[actionDataCellArr.indexOf(e.target) + 1].style.border = '1px black solid'
-                // actionDataCellArr[actionDataCellArr.indexOf(e.target) - 1].style.border = '1px black solid'
-            })
-
-
-            action_td.addEventListener('drop', (e) => {
-                e.preventDefault()
-
-                actionDataCellArr[actionDataCellArr.indexOf(e.target)].style.border = "1px black solid"
-
-                rewriteTable(actionDataCellArr.indexOf(startRow), actionDataCellArr.indexOf(e.target))
-            })
+            action_td.addEventListener('dragstart', dragstartHandle)
+            action_td.addEventListener('dragover', dragoverHandle)
+            action_td.addEventListener('drop', dropHandle)
 
 
             //for mobil
 
-            action_td.addEventListener('touchstart', (e) => {
-                startRow = e.target
-                console.log('start')
-            })
-
-            action_td.addEventListener('touchmove', (e) => {
-                e.preventDefault()
-                console.log('move')
-
-                // Get the touch point under the touchmove event
-                let touch = e.touches[0] || e.changedTouches[0]
-                let targetElement = document.elementFromPoint(touch.clientX, touch.clientY)
-
-                for (let action_td of actionDataCellArr) {
-                    action_td.style.border = '1px black solid'
-                }
-
-                if (actionDataCellArr.indexOf(startRow) > actionDataCellArr.indexOf(targetElement) && actionDataCellArr.includes(targetElement)) {
-                    targetElement.style.borderTop = "3px black solid"
-
-                } else if (actionDataCellArr.includes(targetElement)) {
-                    targetElement.style.borderBottom = "3px black solid"
-                }
-
-                scrollPageMobile(touch.clientY)
-
-                fakeMove(startRow, touch.clientX, touch.clientY)
-            })
-
-            action_td.addEventListener('touchend', (e) => {
-                e.preventDefault()
-
-                document.getElementById('fakeElm').remove()
-                let fakeElm = document.createElement('div')
-                fakeElm.setAttribute("id", "fakeElm")
-                document.body.appendChild(fakeElm)
-
-                console.log('end')
-
-                // Get the touch point under the touchend event
-                let touch = e.changedTouches[0]
-                let targetElement = document.elementFromPoint(touch.clientX, touch.clientY)
-
-                actionDataCellArr[actionDataCellArr.indexOf(targetElement)].style.border = "1px black solid"
-
-                rewriteTable(actionDataCellArr.indexOf(startRow), actionDataCellArr.indexOf(targetElement))
-            })
+            action_td.addEventListener('touchstart', touchstartHandle)
+            action_td.addEventListener('touchmove', touchmoveHandle)
+            action_td.addEventListener('touchend', touchendHandle)
         }
     } else {
         for (let action_td of actionDataCellArr) {
+            action_td.setAttribute('draggable', false)
+
             // remove all event listeners 
+            action_td.removeEventListener('dragstart', dragstartHandle)
+            action_td.removeEventListener('dragover', dragoverHandle)
+            action_td.removeEventListener('drop', dropHandle)
+
+
+            //for mobil
+
+            action_td.removeEventListener('touchstart', touchstartHandle)
+            action_td.removeEventListener('touchmove', touchmoveHandle)
+            action_td.removeEventListener('touchend', touchendHandle)
         }
     }
 }
