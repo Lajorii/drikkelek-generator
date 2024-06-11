@@ -12,17 +12,31 @@
     --azure: #DCE7E7;
     --platinum: #EDEEEA;
     --eggshell: #EEE7D6;
-    --crayola: #fb6f27;
-    --vermillion: #e74c46;
+
 
     /* Sarahs foreslåtte farger */
+    --crayola: #fb6f27;
+    --vermillion: #e74c46;
+    --DMSerifText: "DM Serif Text";
+    --danfo: "Danfo"
 
-    --oswald: "Oswald";
+
+}
+
+h1 {
+    font-family: var(--danfo);
+    color: white;
+    font-size: 100px;
+}
+
+button {
+    font-family: var(--DMSerifText);
 }
 
 body {
+    display: block;
     /* background-color: var(--powder); */
-    background-image: url("https://w0.peakpx.com/wallpaper/62/943/HD-wallpaper-aura-aura-color.jpg");
+    background-image: url("bilder/PC-wallpaper.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     overflow-y: hidden;
@@ -35,23 +49,72 @@ body {
     overflow-x: auto;
 }
 
+
+#structure {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#bigLogo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: fit-content;
+}
+
+#indexImg {
+    height: 300px;
+    width: 300px;
+}
+
+#indexLogo {
+    color: white;
+    width: 310px;
+}
+
+#ready {
+    color: white;
+    font-size: 40px;
+    padding: 10px;
+    border: 2px solid white;
+    border-radius: 5px;
+
+    cursor: pointer;
+
+    display: flex;
+    justify-content: center;
+}
+
+#logo {
+    width: 70px;
+    height: 70px;
+
+}
+
 header {
     /* background-color: var(--platinum); */
     background-color: var(--vermillion);
     color: var(--platinum);
     height: 70px;
     text-align: center;
+
+    display: flex;
+
 }
 
 header p {
     padding: 0;
-    /* font-family: var(--oswald); */
+    /* font-family: var(--DMSerifText); */
     font-size: 40px;
     font-family: "Danfo", swap;
-    padding-top: 10px;
+    padding-top: 7px;
 }
 
-a{
+a {
     text-decoration: none;
     color: white;
 }
@@ -60,10 +123,13 @@ a{
     width: 100vw;
     height: 90vh;
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
     align-items: center;
 }
 
+h2 {
+    font-size: 30px;
+}
 
 .collum {
     flex-direction: column;
@@ -92,7 +158,7 @@ section h2 {
 }
 
 #localCode {
-    font-family: var(--oswald);
+    font-family: var(--DMSerifText);
     font-size: 20px;
     margin: 5px;
 }
@@ -112,7 +178,7 @@ section h2 {
 .infoText {
     width: 70%;
     margin: 10px;
-    font-family: var(--oswald);
+    font-family: var(--DMSerifText);
     text-align: center;
     font-size: 25px;
 }
@@ -131,7 +197,7 @@ section h2 {
     left: 50%;
     transform: translate(-50%);
     width: 60%;
-    font-family: var(--oswald);
+    font-family: var(--DMSerifText);
     text-align: center;
     padding: 10px;
     border-radius: 5px;
@@ -167,15 +233,19 @@ section h2 {
     margin: 20px;
     width: 100px;
     text-align: center;
-    font-family: var(--oswald);
+    font-family: var(--DMSerifText);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 
     cursor: pointer;
 }
+
 input[type="radio"]:checked {
-    outline: none; /* Fjerner standard ramme */
-    border: 2px solid var(--platinum); /* Endrer kantfarge */
-    background-color: var(--vermillion); /* Endrer bakgrunnsfarge */
+    outline: none;
+    /* Fjerner standard ramme */
+    border: 2px solid var(--platinum);
+    /* Endrer kantfarge */
+    background-color: var(--vermillion);
+    /* Endrer bakgrunnsfarge */
 }
 
 
@@ -187,7 +257,7 @@ input[type="number"] {
     text-align: center;
     border-radius: 5px;
     border: 0;
-    font-family: var(--oswald);
+    font-family: var(--DMSerifText);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 
 }
@@ -213,9 +283,9 @@ input[type="number"] {
 }
 
 .speedSelector {
-    width: 50vw;
+    width: 25vw;
     padding: 20px;
-    font-family: var(--oswald);
+    font-family: var(--DMSerifText);
     color: var(--spacecadet);
     display: flex;
     flex-direction: column;
@@ -223,7 +293,7 @@ input[type="number"] {
 }
 
 .speedSelector h3 {
-    font-size: 15px;
+    font-size: 20px;
 }
 
 .speedSelector div {
@@ -237,7 +307,7 @@ input[type="radio"] {
 
 #noSelectedButtonPopup {
     background-color: var(--vermillion);
-    font-family: var(--oswald);
+    font-family: var(--DMSerifText);
     color: var(--azure);
     padding: 40px 20px;
     font-size: 30px;
@@ -316,12 +386,12 @@ input[type="radio"] {
 
 #actionCounter {
     font-size: 20px;
-    font-family: var(--oswald);
+    font-family: var(--DMSerifText);
 }
 
 #code {
     font-size: 30px;
-    font-family: var(--oswald);
+    font-family: var(--DMSerifText);
     text-align: center;
 }
 
@@ -364,7 +434,7 @@ input[type="radio"] {
 #postProductionPopUp p {
     max-width: 50%;
     margin-top: 30px;
-    font-family: var(--oswald);
+    font-family: var(--DMSerifText);
     text-align: center;
     /* border: 1px black solid; */
 
@@ -374,7 +444,7 @@ input[type="radio"] {
 }
 
 #postProductionPopUp p:first-of-type {
-    font-size: 18px;
+    font-size: 15px;
     background-color: var(--platinum);
     padding: 15px;
 }
@@ -390,7 +460,7 @@ input[type="radio"] {
 table {
     border-collapse: collapse;
     border: 1px solid black;
-    font-family: var(--oswald);
+    font-family: var(--DMSerifText);
     width: 80%;
 
     /* position: absolute;
@@ -413,7 +483,7 @@ td {
     height: auto;
 
     border: 1px black solid;
-    font-family: var(--oswald);
+    font-family: var(--DMSerifText);
     padding: 4px 10px;
     min-width: 100px;
     background-color: white;
@@ -424,6 +494,8 @@ td {
 @media (max-width: 600px) {
     body {
         background-repeat: repeat;
+        background-image: url("bilder/phoneWallpaper.jpg");
+
     }
 
     .container {
@@ -439,6 +511,41 @@ td {
 
     h2 {
         font-size: 20px;
+    }
+
+    h1 {
+        font-size: 50px;
+    }
+
+    #structure {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    #indexImg {
+        width: 150px;
+        height: 150px;
+    }
+
+    #indexLogo {
+        width: 200px;
+        height: fit-content;
+    }
+
+    #ready {
+        font-size: 30px;
+        text-align: center;
+        width: 80%;
+        margin: 0 auto;
+
+    }
+
+    .speedSelector h3 {
+        font-size: 15px;
+    }
+
+    p #sendOutButton {
+        font-size: 18px;
     }
 
     .createSong {

@@ -9,7 +9,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DMSerifText:wght@200..700&display=swap" rel="stylesheet">
 
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Danfo&display=swap"
         rel="stylesheet">
@@ -20,33 +20,35 @@
 <body>
 
     <header>
-        <a href="index.html"><p>Drikkelek-maker 2000</p></a> 
+        <img id="logo" src="bilder/white-logo.png" alt="drink with a music-note inside the glass">
+        <a href="choose_path.html"><p>Syng & Sipp</p></a> 
      </header>
 
     <div class="container createSong">
         <textarea name="pastedSong" id="pastedSong" cols="60" rows="28" placeholder="Lim in sangen her"></textarea>
         <div class="speedSelector">
-            <h2>Hvor mange "actions" vil du ha?</h2>
-            <h3>Dette bestemmer hvor mange verselinjer som går med per action</h3>
+            <h2>Hvor mange påstander vil du ha?</h2>
+            <h3>Dette bestemmer hvor mange verselinjer som går med per påstand</h3>
             <div>
+                
                 <input type="radio" id="Få" name="speed" value="3">
-                <label for="Få">Få (3 verselinjer per action)</label><br>
+                <label for="Få">Få - 3 verselinjer per påstand</label><br>
 
                 <input type="radio" id="middels" name="speed" value="2">
-                <label for="middels">Middels (2 verselinjer per action )</label><br>
+                <label for="middels">Middels - 2 verselinjer per påstand </label><br>
 
                 <input type="radio" id="Mange" name="speed" value="1">
-                <label for="Mange">Mange (1 verselinjer per action )</label>
+                <label for="Mange">Mange - 1 verselinje per påstand </label>
 
                 <!-- Kan endres til at bruker skriver inn tall selv! -->
             </div>
         </div>
     </div>
 
-    <p id="generateSongButton" class="button">Generer notat (husk å ha lagt inn hele sangen)</p>
+    <p id="generateSongButton" class="button">Generer notat - Husk å ha lagt inn hele sangen</p>
 
     <div id="noSelectedButtonPopup">
-        <p>OBS! Du har glemt å si hvor mange verselinjer du vil ha per action!</p>
+        <p>OBS! Du har glemt å si hvor mange verselinjer du vil ha per påstander!</p>
         <p>Klikk for å fjerne</p>
     </div>
 
