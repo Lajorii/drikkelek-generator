@@ -55,7 +55,7 @@ getDoc(doc(db, "sanger", code)).then(function (docSnap) {
 
         finishedSongArr = docSnap.data().verselinjer
 
-        console.log(finishedSongArr)
+        //console.log(finishedSongArr)
 
     } else {
         // docSnap.data() will be undefined in this case
@@ -80,12 +80,42 @@ submitPromptButton.addEventListener("click", async function () {
         })
     }
 
+    await successfullySent(prompt.value)
     prompt.value = ""
-    successfullySent()
 })
 
-function successfullySent() {
+async function successfullySent(actionString) {
     // faktisk sjekk om det funka, kan hende at det ikke gjør det
+    let actionsCol = collection(db, "actions")
+    console.log(actionString);
+    let q = query(actionsCol, where("action", "==", actionString))
+
+    //console.log(q)
+
+    try {
+        let actionSnapshot = await getDocs(q)
+        if (!actionSnapshot.empty) {
+            actionSnapshot.forEach(doc => {
+                // Access the document data
+                let data = doc.data()
+                console.log('Dette gikk, her er snapshot:', data.action)
+
+                var element = document.getElementById('successfullySentPopUp')
+                element.classList.remove('fade-effect')
+                void element.offsetWidth
+                element.classList.add('fade-effect')
+
+                setTimeout(() => {
+                    element.classList.remove('fade-effect')
+                }, 2000)
+            });
+        } else {
+            console.log('Ingen dokumenter funnet.')
+        }
+    } catch (error) {
+        console.error('Feil ved henting av dokumenter:', error)
+    }
+
 
     var element = document.getElementById('successfullySentPopUp')
     element.classList.remove('fade-effect')
@@ -149,8 +179,6 @@ async function chechIfFinished() {
         actionCounter.innerHTML = n + "/" + finishedSongArr.length
 
         // Show or hide the loader based on the number of actions
-
-        console.log("hei");
     });
 }
 
