@@ -13,39 +13,122 @@
     --platinum: #EDEEEA;
     --eggshell: #EEE7D6;
 
-    --oswald: "Oswald";
+
+    /* Sarahs foreslåtte farger */
+    --crayola: #fb6f27;
+    --vermillion: #e74c46;
+    --DMSerifText: "DM Serif Text";
+    --danfo: "Danfo"
+
+
+}
+
+h1 {
+    font-family: var(--danfo);
+    color: white;
+    font-size: 100px;
+}
+
+button {
+    font-family: var(--DMSerifText);
 }
 
 body {
-    background-color: var(--powder);
+    display: block;
+    /* background-color: var(--powder); */
+    background-image: url("bilder/PC-wallpaper.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
     overflow-y: hidden;
     overflow-x: hidden;
 }
+
 
 #finishedSongBody {
     overflow-y: auto;
     overflow-x: auto;
 }
 
+
+#structure {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#bigLogo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: fit-content;
+}
+
+#indexImg {
+    height: 300px;
+    width: 300px;
+}
+
+#indexLogo {
+    color: white;
+    width: 310px;
+}
+
+#ready {
+    color: white;
+    font-size: 40px;
+    padding: 10px;
+    border: 2px solid white;
+    border-radius: 5px;
+
+    cursor: pointer;
+
+    display: flex;
+    justify-content: center;
+}
+
+#logo {
+    width: 70px;
+    height: 70px;
+
+}
+
 header {
-    background-color: var(--delft);
+    /* background-color: var(--platinum); */
+    background-color: var(--vermillion);
     color: var(--platinum);
     height: 70px;
     text-align: center;
+
+    display: flex;
+
 }
 
 header p {
     padding: 0;
-    font-family: var(--oswald);
+    /* font-family: var(--DMSerifText); */
     font-size: 40px;
+    font-family: "Danfo", swap;
+    padding-top: 7px;
+}
+
+a {
+    text-decoration: none;
+    color: white;
 }
 
 .container {
     width: 100vw;
-    height: 70vh;
+    height: 90vh;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+h2 {
+    font-size: 30px;
 }
 
 .collum {
@@ -57,9 +140,11 @@ section {
     width: 32%;
     margin: 0 8% 0 8%;
     height: 35%;
-    border: 1px solid black;
-    border-radius: 3px;
+    /* border: solid 2px; */
+    border-radius: 5px;
     cursor: pointer;
+    color: var(--vermillion);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 
     display: flex;
     flex-direction: column;
@@ -73,7 +158,7 @@ section h2 {
 }
 
 #localCode {
-    font-family: var(--oswald);
+    font-family: var(--DMSerifText);
     font-size: 20px;
     margin: 5px;
 }
@@ -93,17 +178,17 @@ section h2 {
 .infoText {
     width: 70%;
     margin: 10px;
-    font-family: var(--oswald);
+    font-family: var(--DMSerifText);
     text-align: center;
-    font-size: 17px;
+    font-size: 25px;
 }
 
 #successfullySentPopUp {
-    background-color: greenyellow;
+    background-color: var(--platinum);
 }
 
 #emptyMessasgePopUp {
-    background-color: red;
+    background-color: rgb(204, 13, 13);
 }
 
 .popUp {
@@ -112,7 +197,7 @@ section h2 {
     left: 50%;
     transform: translate(-50%);
     width: 60%;
-    font-family: var(--oswald);
+    font-family: var(--DMSerifText);
     text-align: center;
     padding: 10px;
     border-radius: 5px;
@@ -128,23 +213,42 @@ section h2 {
 }
 
 @keyframes fade {
-    0%,100% { opacity: 0 }
-    50% { opacity: 1 }
-  }
+
+    0%,
+    100% {
+        opacity: 0
+    }
+
+    50% {
+        opacity: 1
+    }
+}
 
 .button {
-    background-color: var(--azure);
+    background-color: var(--platinum);
     font-size: 20px;
     padding: 10px;
-    border: 1px black solid;
+    /* border: 1px black solid; */
     border-radius: 20px;
     margin: 20px;
     width: 100px;
     text-align: center;
-    font-family: var(--oswald);
+    font-family: var(--DMSerifText);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 
     cursor: pointer;
 }
+
+input[type="radio"]:checked {
+    outline: none;
+    /* Fjerner standard ramme */
+    border: 2px solid var(--platinum);
+    /* Endrer kantfarge */
+    background-color: var(--vermillion);
+    /* Endrer bakgrunnsfarge */
+}
+
+
 
 input[type="number"] {
     width: 70%;
@@ -152,17 +256,24 @@ input[type="number"] {
     font-size: 60px;
     text-align: center;
     border-radius: 5px;
-    font-family: var(--oswald);
+    border: 0;
+    font-family: var(--DMSerifText);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
 }
 
 #generateSongButton {
     width: 70%;
     position: absolute;
-    top: 80%;
+    top: 90%;
     left: 50%;
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
     cursor: pointer;
+    border: 0;
+    /* background-color: var(--platinum);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
+
 }
 
 #pastedSong {
@@ -172,9 +283,9 @@ input[type="number"] {
 }
 
 .speedSelector {
-    width: 50vw;
+    width: 25vw;
     padding: 20px;
-    font-family: var(--oswald);
+    font-family: var(--DMSerifText);
     color: var(--spacecadet);
     display: flex;
     flex-direction: column;
@@ -182,7 +293,7 @@ input[type="number"] {
 }
 
 .speedSelector h3 {
-    font-size: 15px;
+    font-size: 20px;
 }
 
 .speedSelector div {
@@ -195,12 +306,14 @@ input[type="radio"] {
 }
 
 #noSelectedButtonPopup {
-    background-color: var(--delft);
-    font-family: var(--oswald);
+    background-color: var(--vermillion);
+    font-family: var(--DMSerifText);
     color: var(--azure);
     padding: 40px 20px;
     font-size: 30px;
     width: 80%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    cursor: pointer;
 
     position: absolute;
     left: 50%;
@@ -232,7 +345,7 @@ input[type="radio"] {
 .loader {
     border: 16px solid #f3f3f3;
     /* Light grey */
-    border-top: 16px solid #085081;
+    border-top: 16px solid var(--vermillion);
     /* Blue */
     border-radius: 50%;
     width: 120px;
@@ -253,7 +366,7 @@ input[type="radio"] {
 #smallLoader {
     border: 5px solid #f3f3f3;
     /* Light grey */
-    border-top: 5px solid #085081;
+    border-top: 5px solid var(--vermillion);
     /* Blue */
     border-radius: 50%;
     width: 20px;
@@ -273,12 +386,12 @@ input[type="radio"] {
 
 #actionCounter {
     font-size: 20px;
-    font-family: var(--oswald);
+    font-family: var(--DMSerifText);
 }
 
 #code {
     font-size: 30px;
-    font-family: var(--oswald);
+    font-family: var(--DMSerifText);
     text-align: center;
 }
 
@@ -289,8 +402,9 @@ input[type="radio"] {
 }
 
 #finishedButton {
-    background-color: greenyellow;
-    border: 1px black solid;
+    background-color: var(--vermillion);
+    /* border: 1px black solid; */
+    color: var(--platinum);
     padding: 15px;
     border-radius: 10px;
     box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
@@ -320,9 +434,9 @@ input[type="radio"] {
 #postProductionPopUp p {
     max-width: 50%;
     margin-top: 30px;
-    font-family: var(--oswald);
+    font-family: var(--DMSerifText);
     text-align: center;
-    border: 1px black solid;
+    /* border: 1px black solid; */
 
     border-radius: 10px;
     box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
@@ -330,14 +444,14 @@ input[type="radio"] {
 }
 
 #postProductionPopUp p:first-of-type {
-    font-size: 12px;
-    background-color: var(--azure);
+    font-size: 15px;
+    background-color: var(--platinum);
     padding: 15px;
 }
 
 #postProductionPopUp p:last-of-type {
     font-size: 22px;
-    background-color: greenyellow;
+    background-color: var(--platinum);
     padding: 10px;
 
 }
@@ -346,7 +460,7 @@ input[type="radio"] {
 table {
     border-collapse: collapse;
     border: 1px solid black;
-    font-family: var(--oswald);
+    font-family: var(--DMSerifText);
     width: 80%;
 
     /* position: absolute;
@@ -369,7 +483,7 @@ td {
     height: auto;
 
     border: 1px black solid;
-    font-family: var(--oswald);
+    font-family: var(--DMSerifText);
     padding: 4px 10px;
     min-width: 100px;
     background-color: white;
@@ -378,8 +492,60 @@ td {
 }
 
 @media (max-width: 600px) {
+    body {
+        background-repeat: repeat;
+        background-image: url("bilder/phoneWallpaper.jpg");
+
+    }
+
     .container {
         flex-direction: column;
+        height: 85vh;
+    }
+
+    header p {
+        font-size: 30px;
+        padding-top: 15px;
+
+    }
+
+    h2 {
+        font-size: 20px;
+    }
+
+    h1 {
+        font-size: 50px;
+    }
+
+    #structure {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    #indexImg {
+        width: 150px;
+        height: 150px;
+    }
+
+    #indexLogo {
+        width: 200px;
+        height: fit-content;
+    }
+
+    #ready {
+        font-size: 30px;
+        text-align: center;
+        width: 80%;
+        margin: 0 auto;
+
+    }
+
+    .speedSelector h3 {
+        font-size: 15px;
+    }
+
+    p #sendOutButton {
+        font-size: 18px;
     }
 
     .createSong {
@@ -388,10 +554,12 @@ td {
 
     #generateSongButton {
         left: 44.5%;
+        font-size: 15px;
     }
 
     .speedSelector {
         width: 90vw;
+        padding: 5px;
     }
 
     section {
@@ -402,7 +570,7 @@ td {
     }
 
     textarea {
-        height: 300px;
+        height: 250px;
         width: 85%;
     }
 }
