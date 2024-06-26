@@ -94,21 +94,25 @@ body {
     height: 70px;
 }
 
-#indexInfo h3 {
-    font-size: 30px;
+
+#indexInfo h2 {
+    font-size: 40px;
 }
 
-#indexInfo p{
-    font-size: 20px; 
- 
+#indexInfo p {
+    font-size: 30px;
+
+
 }
 
 #indexInfo {
+    z-index: 10000;
     display: none;
     width: 60vw;
     height: 30vh;
     padding: 10px;
     overflow: scroll;
+    text-align: center;
 
     position: absolute;
     top: 60%;
@@ -125,165 +129,259 @@ body {
     position: absolute;
     top: 60%;
 
+    
     background-color: white;
     opacity: 0.2;
     -webkit-filter: blur(20px);
 
 }
 
-#actuallyReady{
+#actuallyReady {
     cursor: pointer;
+    font-size: 34px;
 }
 
-/* Discoball */
 
-html {
+/* Animasjon for å fylle skjermen med drikke + bobler */
+
+.drink {
+    display: block;
+    z-index: -1;
+    opacity: 0.7;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #fd6e5a;
+    /* Plasserer drikken øverst */
+    animation: myAnim 2s cubic-bezier(0.61, 1, 0.88, 1) 0s 1 normal none;
+}
+
+
+
+@keyframes myAnim {
+    0% {
+        transform: scaleY(0);
+        transform-origin: 0% 100%;
+    }
+
+    100% {
+        transform: scaleY(1);
+        transform-origin: 0% 100%;
+    }
+}
+
+#wrapper {
+    display: none;
     width: 100%;
     height: 100%;
 }
 
-.indexBody {
-    background-color: #333;
-    background: -webkit-linear-gradient(bottom left, #111, #222);
-    background: -moz-linear-gradient(bottom left, #111, #222);
-    background: linear-gradient(bottom left, #111, #222);
-    margin: 0;
-    transition: ease 3s;
+.bubble {
+    position: absolute;
+    top: 53%;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.8);
 }
 
-
-@-webkit-keyframes rotateDiscoBall {
-    0% {
-        -webkit-transform: rotateX(90deg) rotateZ(0deg) rotate(0deg);
-    }
-
-    100% {
-        -webkit-transform: rotateX(90deg) rotateZ(360deg) rotate(0deg);
-    }
+.small {
+    width: 10px;
+    height: 10px;
+    left: 50%;
+    animation: flow-s 2s linear infinite;
 }
 
-@keyframes rotateDiscoBall {
-    0% {
-        transform: rotateX(90deg) rotateZ(0deg) rotate(0deg);
-    }
-
-    100% {
-        transform: rotateX(90deg) rotateZ(360deg) rotate(0deg);
-    }
+.small-l {
+    width: 10px;
+    height: 10px;
+    left: 43%;
+    animation: flow-s-l 0.9s linear infinite;
 }
 
-@-webkit-keyframes rotateDiscoBallMiddle {
-    0% {
-        -webkit-transform: rotateX(90deg) rotateY(0deg) rotate(0deg);
-    }
-
-    100% {
-        -webkit-transform: rotateX(90deg) rotateY(-360deg) rotate(0deg);
-    }
+.s-medium {
+    width: 20px;
+    height: 20px;
+    left: 43%;
+    animation: flow-s 1.3s linear infinite;
 }
 
-@keyframes rotateDiscoBallMiddle {
-    0% {
-        transform: rotateX(90deg) rotateY(0deg) rotate(0deg);
-    }
-
-    100% {
-        transform: rotateX(90deg) rotateY(-360deg) rotate(0deg);
-    }
+.medium {
+    width: 25px;
+    height: 25px;
+    left: 45%;
+    animation: flow-m 0.8s linear infinite;
 }
 
-@-webkit-keyframes reflect {
-    0% {
-        -webkit-filter: brightness(60%);
-    }
-
-    50% {
-        -webkit-filter: brightness(120%);
-    }
-
-    100% {
-        -webkit-filter: brightness(90%);
-    }
+.large {
+    width: 5px;
+    height: 5px;
+    left: 57%;
+    animation: flow-l 0.7s linear infinite;
 }
 
-@keyframes reflect {
+@keyframes flow-l {
     0% {
+        top: 53%;
+        left: 57%;
+        opacity: 0;
+    }
+
+    25% {
+        top: 49%;
+        left: 57.5%;
         opacity: 1;
     }
 
     50% {
-        opacity: 0.4;
+        left: 58%;
+        opacity: 1;
+    }
+
+    75% {
+        left: 57.5%;
+        opacity: 1;
     }
 
     100% {
-        opacity: 1;
+        top: 32%;
+        left: 57%;
+        opacity: 0;
     }
 }
 
-#discoBall {
-    display: none;
-    -webkit-transform-style: preserve-3d;
-    transform-style: preserve-3d;
-    width: 100px;
-    height: 100px;
-    position: absolute;
-    top: 25%;
-    left: 50%;
-    margin-left: -50px;
-    -webkit-animation: rotateDiscoBall 18s linear infinite;
-    animation: rotateDiscoBall 18s linear infinite;
+@keyframes flow-s {
+    0% {
+        top: 53%;
+        left: 50%;
+        opacity: 0;
+    }
 
-    transition: 3s;
+    25% {
+        top: 49%;
+        left: 51%;
+        opacity: 1;
+    }
+
+    50% {
+        top: 45%;
+        left: 52%;
+        opacity: 1;
+    }
+
+    75% {
+        top: 41%;
+        left: 51%;
+        opacity: 1;
+    }
+
+    100% {
+        top: 37%;
+        left: 50%;
+        opacity: 0;
+    }
 }
 
-#discoBallLight {
-    display: none;
-    width: 100px;
-    height: 100px;
-    position: absolute;
-    top: 25%;
-    left: 50%;
-    margin-left: -50px;
-    border-radius: 100%;
-    background-color: white;
-    opacity: 0.2;
-    -webkit-filter: blur(20px);
+@keyframes flow-s-m {
+    0% {
+        top: 53%;
+        left: 43%;
+        ;
+        opacity: 0;
+    }
 
-    transition: 3s;
+    25% {
+        top: 49%;
+        left: 42.5%;
+        opacity: 1;
+    }
+
+    50% {
+        top: 45%;
+        left: 42%;
+        opacity: 1;
+    }
+
+    75% {
+        top: 41%;
+        left: 42.5%;
+        opacity: 1;
+    }
+
+    100% {
+        top: 37%;
+        left: 43%;
+        opacity: 0;
+    }
 }
 
-.square {
-    -webkit-transform-style: preserve-3d;
-    transform-style: preserve-3d;
-    position: absolute;
-    top: 50px;
-    left: 50px;
-    width: 6px;
-    height: 6px;
-    position: absolute;
-    transform: rotateX(90deg) rotateY(0deg) translateZ(0px);
+@keyframes flow-m {
+    0% {
+        top: 53%;
+        left: 45%;
+        ;
+        opacity: 0;
+    }
+
+    25% {
+        top: 48%;
+        left: 44.5%;
+        opacity: 1;
+    }
+
+    50% {
+        top: 43%;
+        left: 44%;
+        opacity: 1;
+    }
+
+    75% {
+        top: 38%;
+        left: 44.5%;
+        opacity: 1;
+    }
+
+    100% {
+        top: 33%;
+        left: 45%;
+        opacity: 0;
+    }
 }
 
-#discoBallMiddle {
-    height: 100%;
-    border-radius: 100%;
-    background-color: #111;
-    position: absolute;
-    background: -webkit-linear-gradient(top, #111, #333);
-    background: -moz-linear-gradient(top, #111, #333);
-    background: linear-gradient(top, #111, #333);
-    -webkit-animation: rotateDiscoBallMiddle 18s linear infinite;
-    animation: rotateDiscoBallMiddle 18s linear infinite;
+@keyframes flow-s-l {
+    0% {
+        top: 53%;
+        left: 43%;
+        ;
+        opacity: 0;
+    }
+
+    25% {
+        top: 48%;
+        left: 43.5%;
+        opacity: 1;
+    }
+
+    50% {
+        top: 43%;
+        left: 44%;
+        opacity: 1;
+    }
+
+    75% {
+        top: 38%;
+        left: 43.5%;
+        opacity: 1;
+    }
+
+    100% {
+        top: 33%;
+        left: 43%;
+        opacity: 0;
+    }
 }
 
-#discoLink {
-    position: absolute;
-    bottom: 12px;
-    right: 20px;
-    display: none;
-}
 
-/* Slutt på discoball */
 
 header {
     /* background-color: var(--platinum); */
@@ -709,6 +807,7 @@ td {
     }
 
     #structure {
+        z-index: 10000;
         display: flex;
         flex-wrap: wrap;
         transition: justify-content 3s ease;
@@ -767,5 +866,25 @@ td {
     textarea {
         height: 250px;
         width: 85%;
+    }
+
+    .mobileLiquid{
+        position: absolute;
+        top: 10%;
+
+        transition: 3s;
+    }
+
+
+    #indexInfo p{
+        font-size: 25px;
+    }
+
+    #indexInfo h2{
+        font-size: 30px;
+    }
+
+    #indexInfo{
+        width: 70vw;
     }
 }
