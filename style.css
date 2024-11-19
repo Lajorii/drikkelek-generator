@@ -76,6 +76,8 @@ body {
     align-items: center;
     justify-content: center;
     height: fit-content; 
+    margin-bottom: 200px;
+
 }
 
 #indexImg {
@@ -127,6 +129,7 @@ body {
     padding: 10px;
     overflow: scroll;
     text-align: center;
+    margin-top: -200px;
 
     /* position: absolute;
     top: 60%; */
